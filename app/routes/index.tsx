@@ -8,7 +8,8 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({
   request,
 }): Promise<LoaderData> => {
-  const testCode = "TEST CODE";
+  const { transform } = await import("esbuild");
+  const testCode = await (await transform(`const a = "foo";alert((a));`)).code;
 
   return {
     testCode,
